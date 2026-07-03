@@ -308,16 +308,16 @@ export function ManufacturingShiftTable() {
         </div>
 
         <div className="mt-6 overflow-x-auto">
-          <table className="min-w-max border-collapse text-center text-sm">
+          <table className="w-full table-fixed border-collapse text-center text-xs">
             <thead>
               <tr>
-                <th className="sticky left-0 z-20 border border-stone-200 bg-stone-100 px-4 py-3 text-left">
-                  スタッフ
+                <th className="sticky left-0 z-20 w-20 border border-stone-200 bg-stone-100 px-2 py-2 text-left">
+                  名前
                 </th>
                 {days.map((day) => (
                   <th
                     key={day.date}
-                    className={`border border-stone-200 px-3 py-3 ${
+                    className={`w-8 border border-stone-200 px-1 py-1 ${
                       day.isSunday
                         ? "bg-red-50 text-red-700"
                         : day.isSaturday
@@ -326,7 +326,7 @@ export function ManufacturingShiftTable() {
                     }`}
                   >
                     <div>{day.day}</div>
-                    <div className="text-xs">({day.weekDay})</div>
+                    <div className="text-[10px]">({day.weekDay})</div>
                   </th>
                 ))}
               </tr>
@@ -352,7 +352,7 @@ export function ManufacturingShiftTable() {
                     return (
                       <td
                         key={day.date}
-                        className={`h-20 min-w-24 border border-stone-200 p-2 ${
+                        className={`h-12 border border-stone-200 p-1 ${
                           isWarning
                             ? "bg-red-50"
                             : dayOffRequest
@@ -361,36 +361,26 @@ export function ManufacturingShiftTable() {
                         }`}
                       >
                         {dayOffRequest && (
-                          <p className="mb-1 text-[10px] font-bold text-orange-700">
-                            希望休
+                          <p className="mb-0.5 text-[10px] font-bold text-orange-700">
+                            希
                           </p>
                         )}
 
                         <select
                           value={value}
                           onChange={(event) =>
-                            updateAssignment(
-                              staff.id,
-                              day.date,
-                              event.target.value,
-                            )
+                            updateAssignment(staff.id, day.date, event.target.value)
                           }
-                          className="w-full rounded-lg border border-stone-300 bg-white px-2 py-2 text-xs outline-none focus:border-orange-500"
+                          className="h-7 w-full appearance-none rounded border border-stone-300 bg-white text-center text-xs font-bold outline-none focus:border-orange-500"
                         >
-                          <option value="">未定</option>
-                          <option value="off">休み</option>
+                          <option value="">-</option>
+                          <option value="off">休</option>
                           {activePositions.map((position) => (
                             <option key={position.id} value={position.id}>
-                              {position.shortName}：{position.name}
+                              {position.shortName}
                             </option>
                           ))}
                         </select>
-
-                        {dayOffRequest?.note && (
-                          <p className="mt-1 text-[10px] text-stone-500">
-                            {dayOffRequest.note}
-                          </p>
-                        )}
                       </td>
                     );
                   })}
