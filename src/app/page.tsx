@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Home() {
   return (
     <main className="min-h-screen bg-orange-50 px-6 py-10 text-stone-900">
@@ -14,6 +16,21 @@ export default function Home() {
           bakery-shift は、パン製造リーダー・店長向けの
           希望休回収と製造シフト作成をサポートするWebアプリです。
         </p>
+
+        <div className="mt-8 flex flex-wrap gap-3">
+          <Link
+            href="/admin"
+            className="rounded-xl bg-orange-600 px-5 py-3 font-bold text-white transition hover:bg-orange-700"
+          >
+            管理者画面へ
+          </Link>
+          <Link
+            href="/staff"
+            className="rounded-xl border border-orange-600 bg-white px-5 py-3 font-bold text-orange-700 transition hover:bg-orange-50"
+          >
+            スタッフ画面へ
+          </Link>
+        </div>
 
         <section className="mt-10 grid gap-4 md:grid-cols-3">
           <div className="rounded-2xl bg-white p-6 shadow-sm">
