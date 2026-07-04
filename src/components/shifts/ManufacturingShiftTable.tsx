@@ -1,121 +1,11 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import type { DayOffRequest } from "@/types/dayOffRequest";
-import type { Position } from "@/types/position";
+import { getDaysInMonth } from "@/lib/date";
+import { mockDayOffRequests } from "@/mocks/dayOffRequests";
+import { mockPositions } from "@/mocks/positions";
+import { mockStaffList } from "@/mocks/staff";
 import type { ShiftAssignment } from "@/types/shift";
-import type { Staff } from "@/types/staff";
-
-const mockStaffList: Staff[] = [
-  {
-    id: "1",
-    name: "田中",
-    displayOrder: 1,
-    role: "admin",
-    isActive: true,
-  },
-  {
-    id: "2",
-    name: "佐藤",
-    displayOrder: 2,
-    role: "staff",
-    isActive: true,
-  },
-  {
-    id: "3",
-    name: "鈴木",
-    displayOrder: 3,
-    role: "staff",
-    isActive: true,
-  },
-  {
-    id: "4",
-    name: "山田",
-    displayOrder: 4,
-    role: "staff",
-    isActive: true,
-  },
-];
-
-const mockPositions: Position[] = [
-  {
-    id: "1",
-    name: "仕込み",
-    shortName: "仕",
-    displayOrder: 1,
-    isActive: true,
-  },
-  {
-    id: "2",
-    name: "成形",
-    shortName: "成",
-    displayOrder: 2,
-    isActive: true,
-  },
-  {
-    id: "3",
-    name: "焼成",
-    shortName: "焼",
-    displayOrder: 3,
-    isActive: true,
-  },
-  {
-    id: "4",
-    name: "サンド",
-    shortName: "サ",
-    displayOrder: 4,
-    isActive: true,
-  },
-  {
-    id: "5",
-    name: "補助",
-    shortName: "補",
-    displayOrder: 5,
-    isActive: true,
-  },
-];
-
-const mockDayOffRequests: DayOffRequest[] = [
-  {
-    id: "1",
-    staffName: "田中",
-    date: "2026-07-03",
-    note: "予定あり",
-  },
-  {
-    id: "2",
-    staffName: "佐藤",
-    date: "2026-07-05",
-    note: "通院",
-  },
-  {
-    id: "3",
-    staffName: "鈴木",
-    date: "2026-07-12",
-    note: "",
-  },
-];
-
-const weekDayNames = ["日", "月", "火", "水", "木", "金", "土"];
-
-function getDaysInMonth(monthValue: string) {
-  const [year, month] = monthValue.split("-").map(Number);
-  const lastDay = new Date(year, month, 0).getDate();
-
-  return Array.from({ length: lastDay }, (_, index) => {
-    const day = index + 1;
-    const date = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
-    const weekDayIndex = new Date(year, month - 1, day).getDay();
-
-    return {
-      day,
-      date,
-      weekDay: weekDayNames[weekDayIndex],
-      isSunday: weekDayIndex === 0,
-      isSaturday: weekDayIndex === 6,
-    };
-  });
-}
 
 export function ManufacturingShiftTable() {
   const [selectedMonth, setSelectedMonth] = useState("2026-07");
@@ -149,9 +39,9 @@ export function ManufacturingShiftTable() {
     return mockStaffList.find((staff) => staff.id === staffId)?.name ?? "";
   };
 
-  const getDayOffRequest = (staffName: string, date: string) => {
+  const getDayOffRequest = (staffId: string, date: string) => {
     return mockDayOffRequests.find(
-      (request) => request.staffName === staffName && request.date === date,
+      (request) => request.staffId === staffId && request.date === date,
     );
   };
 
@@ -219,8 +109,7 @@ export function ManufacturingShiftTable() {
       return false;
     }
 
-    const staffName = getStaffName(assignment.staffId);
-    return Boolean(getDayOffRequest(staffName, assignment.date));
+    return Boolean(getDayOffRequest(assignment.staffId, assignment.date));
   });
 
   const handleSaveDraft = () => {
@@ -341,7 +230,7 @@ export function ManufacturingShiftTable() {
 
                   {days.map((day) => {
                     const dayOffRequest = getDayOffRequest(
-                      staff.name,
+                      staff.id,
                       day.date,
                     );
                     const value = getCellValue(staff.id, day.date);

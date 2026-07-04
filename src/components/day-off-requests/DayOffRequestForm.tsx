@@ -1,12 +1,14 @@
 "use client";
 
 import { FormEvent, useMemo, useState } from "react";
+import { mockStaffList } from "@/mocks/staff";
 import type { DayOffRequest } from "@/types/dayOffRequest";
 
-const staffOptions = ["田中", "佐藤", "鈴木", "山田"];
+const getStaffName = (staffId: string) =>
+  mockStaffList.find((staff) => staff.id === staffId)?.name ?? "";
 
 export function DayOffRequestForm() {
-  const [staffName, setStaffName] = useState(staffOptions[0]);
+  const [staffId, setStaffId] = useState(mockStaffList[0].id);
   const [date, setDate] = useState("");
   const [note, setNote] = useState("");
   const [requests, setRequests] = useState<DayOffRequest[]>([]);
@@ -25,7 +27,7 @@ export function DayOffRequestForm() {
 
     const newRequest: DayOffRequest = {
       id: crypto.randomUUID(),
-      staffName,
+      staffId,
       date,
       note: note.trim(),
     };
@@ -56,13 +58,13 @@ export function DayOffRequestForm() {
             </label>
             <select
               id="staff-name"
-              value={staffName}
-              onChange={(event) => setStaffName(event.target.value)}
+              value={staffId}
+              onChange={(event) => setStaffId(event.target.value)}
               className="mt-2 w-full rounded-xl border border-stone-300 bg-white px-4 py-3 outline-none focus:border-orange-500"
             >
-              {staffOptions.map((staff) => (
-                <option key={staff} value={staff}>
-                  {staff}
+              {mockStaffList.map((staff) => (
+                <option key={staff.id} value={staff.id}>
+                  {staff.name}
                 </option>
               ))}
             </select>
@@ -132,7 +134,7 @@ export function DayOffRequestForm() {
                 {sortedRequests.map((request) => (
                   <tr key={request.id} className="border-b border-stone-100">
                     <td className="px-4 py-3 font-medium">{request.date}</td>
-                    <td className="px-4 py-3">{request.staffName}</td>
+                    <td className="px-4 py-3">{getStaffName(request.staffId)}</td>
                     <td className="px-4 py-3 text-stone-600">
                       {request.note || "-"}
                     </td>

@@ -1,53 +1,16 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import type { DayOffRequest } from "@/types/dayOffRequest";
+import { getDaysInMonth } from "@/lib/date";
+import { mockDayOffRequests } from "@/mocks/dayOffRequests";
+import { mockStaffList } from "@/mocks/staff";
 
-const staffNames = ["田中", "佐藤", "鈴木", "山田"];
+const getStaffName = (staffId: string) =>
+  mockStaffList.find((staff) => staff.id === staffId)?.name ?? "";
 
-const mockRequests: DayOffRequest[] = [
-  {
-    id: "1",
-    staffName: "田中",
-    date: "2026-07-03",
-    note: "予定あり",
-  },
-  {
-    id: "2",
-    staffName: "田中",
-    date: "2026-07-12",
-    note: "",
-  },
-  {
-    id: "3",
-    staffName: "佐藤",
-    date: "2026-07-05",
-    note: "通院",
-  },
-  {
-    id: "4",
-    staffName: "鈴木",
-    date: "2026-07-18",
-    note: "",
-  },
-];
-
-const submittedStaffNames = ["田中", "佐藤", "鈴木"];
-
-function getDaysInMonth(monthValue: string) {
-  const [year, month] = monthValue.split("-").map(Number);
-  const lastDay = new Date(year, month, 0).getDate();
-
-  return Array.from({ length: lastDay }, (_, index) => {
-    const day = index + 1;
-    const date = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
-
-    return {
-      day,
-      date,
-    };
-  });
-}
+const submittedStaffIds = mockDayOffRequests.map(
+  (request) => request.staffId,
+);
 
 export function AdminDayOffRequestList() {
   const [selectedMonth, setSelectedMonth] = useState("2026-07");
@@ -57,18 +20,18 @@ export function AdminDayOffRequestList() {
   }, [selectedMonth]);
 
   const monthlyRequests = useMemo(() => {
-    return mockRequests.filter((request) =>
+    return mockDayOffRequests.filter((request) =>
       request.date.startsWith(selectedMonth),
     );
   }, [selectedMonth]);
 
-  const unsubmittedStaffNames = staffNames.filter(
-    (staffName) => !submittedStaffNames.includes(staffName),
+  const unsubmittedStaffList = mockStaffList.filter(
+    (staff) => !submittedStaffIds.includes(staff.id),
   );
 
-  const getRequest = (staffName: string, date: string) => {
+  const getRequest = (staffId: string, date: string) => {
     return monthlyRequests.find(
-      (request) => request.staffName === staffName && request.date === date,
+      (request) => request.staffId === staffId && request.date === date,
     );
   };
 
@@ -104,18 +67,18 @@ export function AdminDayOffRequestList() {
       <section className="rounded-2xl bg-white p-6 shadow-sm">
         <h2 className="text-xl font-bold">未提出者</h2>
 
-        {unsubmittedStaffNames.length === 0 ? (
+        {unsubmittedStaffList.length === 0 ? (
           <p className="mt-4 text-sm text-stone-600">
             全員が希望休を提出済みです。
           </p>
         ) : (
           <ul className="mt-4 flex flex-wrap gap-2">
-            {unsubmittedStaffNames.map((staffName) => (
+            {unsubmittedStaffList.map((staff) => (
               <li
-                key={staffName}
+                key={staff.id}
                 className="rounded-full bg-red-100 px-4 py-2 text-sm font-bold text-red-700"
               >
-                {staffName}
+                {staff.name}
               </li>
             ))}
           </ul>
@@ -144,14 +107,14 @@ export function AdminDayOffRequestList() {
             </thead>
 
             <tbody>
-              {staffNames.map((staffName) => (
-                <tr key={staffName}>
+              {mockStaffList.map((staff) => (
+                <tr key={staff.id}>
                   <th className="sticky left-0 z-10 border border-stone-200 bg-white px-4 py-3 text-left font-bold">
-                    {staffName}
+                    {staff.name}
                   </th>
 
                   {days.map((day) => {
-                    const request = getRequest(staffName, day.date);
+                    const request = getRequest(staff.id, day.date);
 
                     return (
                       <td
@@ -203,7 +166,7 @@ export function AdminDayOffRequestList() {
                 {monthlyRequests.map((request) => (
                   <tr key={request.id} className="border-b border-stone-100">
                     <td className="px-4 py-3 font-medium">{request.date}</td>
-                    <td className="px-4 py-3">{request.staffName}</td>
+                    <td className="px-4 py-3">{getStaffName(request.staffId)}</td>
                     <td className="px-4 py-3 text-stone-600">
                       {request.note || "-"}
                     </td>
