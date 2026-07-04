@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { getDaysInMonth } from "@/lib/date";
 import type { DayOffRequest } from "@/types/dayOffRequest";
 import type { Position } from "@/types/position";
 import type { ShiftAssignment } from "@/types/shift";
@@ -95,27 +96,6 @@ const mockDayOffRequests: DayOffRequest[] = [
     note: "",
   },
 ];
-
-const weekDayNames = ["日", "月", "火", "水", "木", "金", "土"];
-
-function getDaysInMonth(monthValue: string) {
-  const [year, month] = monthValue.split("-").map(Number);
-  const lastDay = new Date(year, month, 0).getDate();
-
-  return Array.from({ length: lastDay }, (_, index) => {
-    const day = index + 1;
-    const date = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
-    const weekDayIndex = new Date(year, month - 1, day).getDay();
-
-    return {
-      day,
-      date,
-      weekDay: weekDayNames[weekDayIndex],
-      isSunday: weekDayIndex === 0,
-      isSaturday: weekDayIndex === 6,
-    };
-  });
-}
 
 export function ManufacturingShiftTable() {
   const [selectedMonth, setSelectedMonth] = useState("2026-07");

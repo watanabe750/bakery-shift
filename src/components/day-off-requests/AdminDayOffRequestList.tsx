@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { getDaysInMonth } from "@/lib/date";
 import type { DayOffRequest } from "@/types/dayOffRequest";
 
 const staffNames = ["田中", "佐藤", "鈴木", "山田"];
@@ -33,21 +34,6 @@ const mockRequests: DayOffRequest[] = [
 ];
 
 const submittedStaffNames = ["田中", "佐藤", "鈴木"];
-
-function getDaysInMonth(monthValue: string) {
-  const [year, month] = monthValue.split("-").map(Number);
-  const lastDay = new Date(year, month, 0).getDate();
-
-  return Array.from({ length: lastDay }, (_, index) => {
-    const day = index + 1;
-    const date = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
-
-    return {
-      day,
-      date,
-    };
-  });
-}
 
 export function AdminDayOffRequestList() {
   const [selectedMonth, setSelectedMonth] = useState("2026-07");
