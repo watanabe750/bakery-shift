@@ -39,9 +39,9 @@ export function ManufacturingShiftTable() {
     return mockStaffList.find((staff) => staff.id === staffId)?.name ?? "";
   };
 
-  const getDayOffRequest = (staffName: string, date: string) => {
+  const getDayOffRequest = (staffId: string, date: string) => {
     return mockDayOffRequests.find(
-      (request) => request.staffName === staffName && request.date === date,
+      (request) => request.staffId === staffId && request.date === date,
     );
   };
 
@@ -109,8 +109,7 @@ export function ManufacturingShiftTable() {
       return false;
     }
 
-    const staffName = getStaffName(assignment.staffId);
-    return Boolean(getDayOffRequest(staffName, assignment.date));
+    return Boolean(getDayOffRequest(assignment.staffId, assignment.date));
   });
 
   const handleSaveDraft = () => {
@@ -231,7 +230,7 @@ export function ManufacturingShiftTable() {
 
                   {days.map((day) => {
                     const dayOffRequest = getDayOffRequest(
-                      staff.name,
+                      staff.id,
                       day.date,
                     );
                     const value = getCellValue(staff.id, day.date);

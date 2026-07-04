@@ -5,10 +5,11 @@ import { getDaysInMonth } from "@/lib/date";
 import { mockDayOffRequests } from "@/mocks/dayOffRequests";
 import { mockStaffList } from "@/mocks/staff";
 
-const staffNames = mockStaffList.map((staff) => staff.name);
+const getStaffName = (staffId: string) =>
+  mockStaffList.find((staff) => staff.id === staffId)?.name ?? "";
 
-const submittedStaffNames = mockDayOffRequests.map(
-  (request) => request.staffName,
+const submittedStaffIds = mockDayOffRequests.map(
+  (request) => request.staffId,
 );
 
 export function AdminDayOffRequestList() {
@@ -24,13 +25,13 @@ export function AdminDayOffRequestList() {
     );
   }, [selectedMonth]);
 
-  const unsubmittedStaffNames = staffNames.filter(
-    (staffName) => !submittedStaffNames.includes(staffName),
+  const unsubmittedStaffList = mockStaffList.filter(
+    (staff) => !submittedStaffIds.includes(staff.id),
   );
 
-  const getRequest = (staffName: string, date: string) => {
+  const getRequest = (staffId: string, date: string) => {
     return monthlyRequests.find(
-      (request) => request.staffName === staffName && request.date === date,
+      (request) => request.staffId === staffId && request.date === date,
     );
   };
 
@@ -66,18 +67,18 @@ export function AdminDayOffRequestList() {
       <section className="rounded-2xl bg-white p-6 shadow-sm">
         <h2 className="text-xl font-bold">未提出者</h2>
 
-        {unsubmittedStaffNames.length === 0 ? (
+        {unsubmittedStaffList.length === 0 ? (
           <p className="mt-4 text-sm text-stone-600">
             全員が希望休を提出済みです。
           </p>
         ) : (
           <ul className="mt-4 flex flex-wrap gap-2">
-            {unsubmittedStaffNames.map((staffName) => (
+            {unsubmittedStaffList.map((staff) => (
               <li
-                key={staffName}
+                key={staff.id}
                 className="rounded-full bg-red-100 px-4 py-2 text-sm font-bold text-red-700"
               >
-                {staffName}
+                {staff.name}
               </li>
             ))}
           </ul>
@@ -106,14 +107,14 @@ export function AdminDayOffRequestList() {
             </thead>
 
             <tbody>
-              {staffNames.map((staffName) => (
-                <tr key={staffName}>
+              {mockStaffList.map((staff) => (
+                <tr key={staff.id}>
                   <th className="sticky left-0 z-10 border border-stone-200 bg-white px-4 py-3 text-left font-bold">
-                    {staffName}
+                    {staff.name}
                   </th>
 
                   {days.map((day) => {
-                    const request = getRequest(staffName, day.date);
+                    const request = getRequest(staff.id, day.date);
 
                     return (
                       <td
@@ -165,7 +166,7 @@ export function AdminDayOffRequestList() {
                 {monthlyRequests.map((request) => (
                   <tr key={request.id} className="border-b border-stone-100">
                     <td className="px-4 py-3 font-medium">{request.date}</td>
-                    <td className="px-4 py-3">{request.staffName}</td>
+                    <td className="px-4 py-3">{getStaffName(request.staffId)}</td>
                     <td className="px-4 py-3 text-stone-600">
                       {request.note || "-"}
                     </td>

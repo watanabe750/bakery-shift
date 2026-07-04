@@ -1,6 +1,6 @@
 export type DayOffRequest = {
   id: string;
-  staffName: string;
+  staffId: string;
   date: string;
   note: string;
 };
