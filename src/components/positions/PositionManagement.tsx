@@ -1,37 +1,14 @@
 "use client";
 
 import { FormEvent, useMemo, useState } from "react";
+import { mockPositions } from "@/mocks/positions";
 import type { Position } from "@/types/position";
 
-const initialPositions: Position[] = [
-  {
-    id: "1",
-    name: "仕込み",
-    shortName: "仕",
-    displayOrder: 1,
-    isActive: true,
-  },
-  {
-    id: "2",
-    name: "成形",
-    shortName: "成",
-    displayOrder: 2,
-    isActive: true,
-  },
-  {
-    id: "3",
-    name: "焼成",
-    shortName: "焼",
-    displayOrder: 3,
-    isActive: true,
-  },
-];
-
 export function PositionManagement() {
-  const [positions, setPositions] = useState<Position[]>(initialPositions);
+  const [positions, setPositions] = useState<Position[]>(mockPositions);
   const [name, setName] = useState("");
   const [shortName, setShortName] = useState("");
-  const [displayOrder, setDisplayOrder] = useState(4);
+  const [displayOrder, setDisplayOrder] = useState(mockPositions.length + 1);
 
   const sortedPositions = useMemo(() => {
     return [...positions].sort((a, b) => a.displayOrder - b.displayOrder);

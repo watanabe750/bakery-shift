@@ -1,29 +1,13 @@
 "use client";
 
 import { FormEvent, useMemo, useState } from "react";
+import { mockStaffList } from "@/mocks/staff";
 import type { Staff, StaffRole } from "@/types/staff";
 
-const initialStaffList: Staff[] = [
-  {
-    id: "1",
-    name: "田中",
-    displayOrder: 1,
-    role: "admin",
-    isActive: true,
-  },
-  {
-    id: "2",
-    name: "佐藤",
-    displayOrder: 2,
-    role: "staff",
-    isActive: true,
-  },
-];
-
 export function StaffManagement() {
-  const [staffList, setStaffList] = useState<Staff[]>(initialStaffList);
+  const [staffList, setStaffList] = useState<Staff[]>(mockStaffList);
   const [name, setName] = useState("");
-  const [displayOrder, setDisplayOrder] = useState(1);
+  const [displayOrder, setDisplayOrder] = useState(mockStaffList.length + 1);
   const [role, setRole] = useState<StaffRole>("staff");
 
   const sortedStaffList = useMemo(() => {

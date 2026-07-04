@@ -1,9 +1,10 @@
 "use client";
 
 import { FormEvent, useMemo, useState } from "react";
+import { mockStaffList } from "@/mocks/staff";
 import type { DayOffRequest } from "@/types/dayOffRequest";
 
-const staffOptions = ["田中", "佐藤", "鈴木", "山田"];
+const staffOptions = mockStaffList.map((staff) => staff.name);
 
 export function DayOffRequestForm() {
   const [staffName, setStaffName] = useState(staffOptions[0]);

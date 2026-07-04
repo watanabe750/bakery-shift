@@ -2,38 +2,14 @@
 
 import { useMemo, useState } from "react";
 import { getDaysInMonth } from "@/lib/date";
-import type { DayOffRequest } from "@/types/dayOffRequest";
+import { mockDayOffRequests } from "@/mocks/dayOffRequests";
+import { mockStaffList } from "@/mocks/staff";
 
-const staffNames = ["田中", "佐藤", "鈴木", "山田"];
+const staffNames = mockStaffList.map((staff) => staff.name);
 
-const mockRequests: DayOffRequest[] = [
-  {
-    id: "1",
-    staffName: "田中",
-    date: "2026-07-03",
-    note: "予定あり",
-  },
-  {
-    id: "2",
-    staffName: "田中",
-    date: "2026-07-12",
-    note: "",
-  },
-  {
-    id: "3",
-    staffName: "佐藤",
-    date: "2026-07-05",
-    note: "通院",
-  },
-  {
-    id: "4",
-    staffName: "鈴木",
-    date: "2026-07-18",
-    note: "",
-  },
-];
-
-const submittedStaffNames = ["田中", "佐藤", "鈴木"];
+const submittedStaffNames = mockDayOffRequests.map(
+  (request) => request.staffName,
+);
 
 export function AdminDayOffRequestList() {
   const [selectedMonth, setSelectedMonth] = useState("2026-07");
@@ -43,7 +19,7 @@ export function AdminDayOffRequestList() {
   }, [selectedMonth]);
 
   const monthlyRequests = useMemo(() => {
-    return mockRequests.filter((request) =>
+    return mockDayOffRequests.filter((request) =>
       request.date.startsWith(selectedMonth),
     );
   }, [selectedMonth]);

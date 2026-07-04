@@ -2,100 +2,10 @@
 
 import { useMemo, useState } from "react";
 import { getDaysInMonth } from "@/lib/date";
-import type { DayOffRequest } from "@/types/dayOffRequest";
-import type { Position } from "@/types/position";
+import { mockDayOffRequests } from "@/mocks/dayOffRequests";
+import { mockPositions } from "@/mocks/positions";
+import { mockStaffList } from "@/mocks/staff";
 import type { ShiftAssignment } from "@/types/shift";
-import type { Staff } from "@/types/staff";
-
-const mockStaffList: Staff[] = [
-  {
-    id: "1",
-    name: "田中",
-    displayOrder: 1,
-    role: "admin",
-    isActive: true,
-  },
-  {
-    id: "2",
-    name: "佐藤",
-    displayOrder: 2,
-    role: "staff",
-    isActive: true,
-  },
-  {
-    id: "3",
-    name: "鈴木",
-    displayOrder: 3,
-    role: "staff",
-    isActive: true,
-  },
-  {
-    id: "4",
-    name: "山田",
-    displayOrder: 4,
-    role: "staff",
-    isActive: true,
-  },
-];
-
-const mockPositions: Position[] = [
-  {
-    id: "1",
-    name: "仕込み",
-    shortName: "仕",
-    displayOrder: 1,
-    isActive: true,
-  },
-  {
-    id: "2",
-    name: "成形",
-    shortName: "成",
-    displayOrder: 2,
-    isActive: true,
-  },
-  {
-    id: "3",
-    name: "焼成",
-    shortName: "焼",
-    displayOrder: 3,
-    isActive: true,
-  },
-  {
-    id: "4",
-    name: "サンド",
-    shortName: "サ",
-    displayOrder: 4,
-    isActive: true,
-  },
-  {
-    id: "5",
-    name: "補助",
-    shortName: "補",
-    displayOrder: 5,
-    isActive: true,
-  },
-];
-
-const mockDayOffRequests: DayOffRequest[] = [
-  {
-    id: "1",
-    staffName: "田中",
-    date: "2026-07-03",
-    note: "予定あり",
-  },
-  {
-    id: "2",
-    staffName: "佐藤",
-    date: "2026-07-05",
-    note: "通院",
-  },
-  {
-    id: "3",
-    staffName: "鈴木",
-    date: "2026-07-12",
-    note: "",
-  },
-];
 
 export function ManufacturingShiftTable() {
   const [selectedMonth, setSelectedMonth] = useState("2026-07");
