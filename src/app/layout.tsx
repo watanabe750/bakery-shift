@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist_Mono, M_PLUS_Rounded_1c } from "next/font/google";
+import { AppFooter } from "@/components/layout/AppFooter";
 import { AppHeader } from "@/components/layout/AppHeader";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const mPlusRounded = M_PLUS_Rounded_1c({
+  variable: "--font-m-plus-rounded",
+  weight: ["400", "500", "700", "800"],
   subsets: ["latin"],
 });
 
@@ -27,11 +29,12 @@ export default function RootLayout({
   return (
     <html
       lang="ja"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${mPlusRounded.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="flex min-h-full flex-col bg-gradient-to-b from-orange-50 via-amber-50/60 to-orange-100/80 text-stone-800">
         <AppHeader />
-        {children}
+        <div className="flex-1">{children}</div>
+        <AppFooter />
       </body>
     </html>
   );
