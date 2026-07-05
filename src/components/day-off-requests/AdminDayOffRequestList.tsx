@@ -37,7 +37,7 @@ export function AdminDayOffRequestList() {
 
   return (
     <div className="mt-8 space-y-6">
-      <section className="rounded-2xl bg-white p-6 shadow-sm">
+      <section className="rounded-3xl border border-orange-100 bg-white p-6 shadow-sm">
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
             <h2 className="text-xl font-bold">希望休一覧</h2>
@@ -64,7 +64,7 @@ export function AdminDayOffRequestList() {
         </div>
       </section>
 
-      <section className="rounded-2xl bg-white p-6 shadow-sm">
+      <section className="rounded-3xl border border-orange-100 bg-white p-6 shadow-sm">
         <h2 className="text-xl font-bold">未提出者</h2>
 
         {unsubmittedStaffList.length === 0 ? (
@@ -85,7 +85,7 @@ export function AdminDayOffRequestList() {
         )}
       </section>
 
-      <section className="rounded-2xl bg-white p-6 shadow-sm">
+      <section className="rounded-3xl border border-orange-100 bg-white p-6 shadow-sm">
         <h2 className="text-xl font-bold">月間希望休表</h2>
 
         <div className="mt-6 overflow-x-auto">
@@ -145,7 +145,7 @@ export function AdminDayOffRequestList() {
         </div>
       </section>
 
-      <section className="rounded-2xl bg-white p-6 shadow-sm">
+      <section className="rounded-3xl border border-orange-100 bg-white p-6 shadow-sm">
         <h2 className="text-xl font-bold">希望休リスト</h2>
 
         {monthlyRequests.length === 0 ? (

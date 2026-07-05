@@ -118,7 +118,7 @@ export function ManufacturingShiftTable() {
 
   return (
     <div className="mt-8 space-y-6">
-      <section className="rounded-2xl bg-white p-6 shadow-sm">
+      <section className="rounded-3xl border border-orange-100 bg-white p-6 shadow-sm">
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
             <h2 className="text-xl font-bold">製造シフト作成</h2>
@@ -162,7 +162,7 @@ export function ManufacturingShiftTable() {
       </section>
 
       {warningAssignments.length > 0 && (
-        <section className="rounded-2xl border border-red-200 bg-red-50 p-6">
+        <section className="rounded-3xl border border-red-200 bg-red-50 p-6">
           <h2 className="text-lg font-bold text-red-700">希望休との重複あり</h2>
           <ul className="mt-3 space-y-2 text-sm text-red-700">
             {warningAssignments.map((assignment) => (
@@ -175,7 +175,7 @@ export function ManufacturingShiftTable() {
         </section>
       )}
 
-      <section className="rounded-2xl bg-white p-6 shadow-sm">
+      <section className="rounded-3xl border border-orange-100 bg-white p-6 shadow-sm">
         <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
           <div>
             <h2 className="text-xl font-bold">月間シフト表</h2>
