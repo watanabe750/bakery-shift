@@ -52,7 +52,7 @@ export function StaffManagement() {
 
   return (
     <div className="mt-8 grid gap-6 lg:grid-cols-[360px_1fr]">
-      <section className="rounded-2xl bg-white p-6 shadow-sm">
+      <section className="rounded-3xl border border-orange-100 bg-white p-6 shadow-sm">
         <h2 className="text-xl font-bold">スタッフ追加</h2>
 
         <form onSubmit={handleSubmit} className="mt-6 space-y-5">
@@ -117,7 +117,7 @@ export function StaffManagement() {
         </form>
       </section>
 
-      <section className="rounded-2xl bg-white p-6 shadow-sm">
+      <section className="rounded-3xl border border-orange-100 bg-white p-6 shadow-sm">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <h2 className="text-xl font-bold">スタッフ一覧</h2>

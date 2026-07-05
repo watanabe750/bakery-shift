@@ -60,7 +60,7 @@ export function PositionManagement() {
 
   return (
     <div className="mt-8 grid gap-6 lg:grid-cols-[360px_1fr]">
-      <section className="rounded-2xl bg-white p-6 shadow-sm">
+      <section className="rounded-3xl border border-orange-100 bg-white p-6 shadow-sm">
         <h2 className="text-xl font-bold">ポジション追加</h2>
 
         <form onSubmit={handleSubmit} className="mt-6 space-y-5">
@@ -128,7 +128,7 @@ export function PositionManagement() {
         </form>
       </section>
 
-      <section className="rounded-2xl bg-white p-6 shadow-sm">
+      <section className="rounded-3xl border border-orange-100 bg-white p-6 shadow-sm">
         <div>
           <h2 className="text-xl font-bold">ポジション一覧</h2>
           <p className="mt-2 text-sm text-stone-600">
